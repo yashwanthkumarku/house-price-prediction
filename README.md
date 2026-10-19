@@ -64,14 +64,39 @@ The program displays the estimated house price.
 
 ## Model Evaluation
 
-The model reports the following evaluation metrics:
+## Model Evaluation
 
-- **MAE:** Mean Absolute Error
-- **MSE:** Mean Squared Error
-- **RMSE:** Root Mean Squared Error
-- **R²:** Coefficient of Determination
+The House Price Prediction model was evaluated on a held-out test set using standard regression metrics.
 
-Actual evaluation results depend on the dataset and the train/test split.
+### Evaluation Results
+
+| Metric | Result |
+|---|---:|
+| Mean Absolute Error (MAE) | ₹413,608.98 |
+| Mean Squared Error (MSE) | 273,860,158,597.18 |
+| Root Mean Squared Error (RMSE) | ₹523,316.50 |
+| R² Score | 0.5402 |
+| Baseline MAE | ₹1,354,166.67 |
+
+### Results Interpretation
+
+- **MAE:** The model's predictions have an average absolute error of approximately ₹4.14 lakh on the test set.
+- **MSE:** Measures the average squared prediction error, penalizing larger errors more heavily. Its unit is rupees squared.
+- **RMSE:** The RMSE is approximately ₹5.23 lakh, indicating that larger prediction errors have a stronger influence on this metric than on MAE.
+- **R² Score:** The model achieved an R² score of 0.5402, indicating that it explains approximately 54.02% of the variation in house prices on the test set relative to a mean-based reference.
+- **Baseline Comparison:** The baseline MAE is ₹13.54 lakh, compared with the model's MAE of ₹4.14 lakh. The model's MAE is approximately 69.45% lower than the baseline MAE on this test set.
+
+### Conclusion
+
+The Multiple Linear Regression model outperformed the mean-price baseline on the evaluated test set. The results suggest that area, number of bedrooms, and location provide useful information for estimating house prices.
+
+### Limitations and Future Improvements
+
+- Model performance depends on the dataset and train/test split.
+- A small or synthetic dataset may not represent actual housing market conditions.
+- Additional features, such as property age, condition, and nearby facilities, could improve predictions.
+- Testing with a larger, representative dataset and cross-validation would help assess how well the model generalizes to unseen properties.
+- The current evaluation does not guarantee real-world prediction accuracy.
 
 ## Dataset
 

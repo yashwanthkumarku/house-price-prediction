@@ -92,6 +92,7 @@ model.fit(X_train, y_train)
 
 print("\nModel training completed successfully!")
 
+
 # 8. Make predictions on test data
 y_pred = model.predict(X_test)
 
@@ -99,13 +100,40 @@ y_pred = model.predict(X_test)
 mae = mean_absolute_error(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
-r2 = r2_score(y_test, y_pred)
+r2 = r2_score(y_test, y_pred) if len(y_test) >= 2 else float("nan")
+
+# Baseline: predict the mean price from the training data
+baseline_pred = np.full(len(y_test), y_train.mean())
+baseline_mae = mean_absolute_error(y_test, baseline_pred)
 
 print("\n--- Model Evaluation ---")
+print(f"Test samples: {len(y_test)}")
 print(f"Mean Absolute Error (MAE): ₹{mae:,.2f}")
-print(f"Mean Squared Error (MSE): {mse:,.2f}")
+print(f"Mean Squared Error (MSE): ₹{mse:,.2f}")
 print(f"Root Mean Squared Error (RMSE): ₹{rmse:,.2f}")
 print(f"R² Score: {r2:.4f}")
+print(f"Baseline MAE (training mean): ₹{baseline_mae:,.2f}")
+
+if mae < baseline_mae:
+    print("The model has lower MAE than the baseline on this test set.")
+elif mae > baseline_mae:
+    print("The baseline has lower MAE than the model on this test set.")
+else:
+    print("The model and baseline have equal MAE on this test set.")
+
+# Compare actual and predicted prices
+results = pd.DataFrame({
+    "Actual Price (₹)": y_test.to_numpy(),
+    "Predicted Price (₹)": y_pred,
+})
+
+results["Absolute Error (₹)"] = abs(
+    results["Actual Price (₹)"] - results["Predicted Price (₹)"]
+)
+
+print("\n--- Actual vs Predicted ---")
+print(results.round(2).to_string(index=False))
+
 
 # 10. Predict the price of a new house
 
